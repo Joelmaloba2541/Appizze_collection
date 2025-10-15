@@ -7,13 +7,17 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-appizzo-collection"
 
 DEBUG = os.getenv("DJANGO_DEBUG", "1") == "1"
 
-ALLOWED_HOSTS: list[str] = [
-    "localhost",
-    "127.0.0.1",
-    "[::1]",
-]
+def _split_env_list(value: str | None) -> list[str]:
+    if not value:
+        return []
+    return [item.strip() for item in value.split(",") if item.strip()]
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+
+_default_hosts = ["localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS: list[str] = _split_env_list(os.getenv("ALLOWED_HOSTS")) or _default_hosts
+
+_default_csrf = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = _split_env_list(os.getenv("CSRF_TRUSTED_ORIGINS")) or _default_csrf
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -95,7 +99,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = _split_env_list(os.getenv("CORS_ALLOWED_ORIGINS")) or [
     "http://localhost:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
