@@ -11,6 +11,7 @@ def main() -> None:
     os.chdir(Path(__file__).resolve().parent)
     django.setup()
     call_command("migrate", interactive=False)
+    call_command("init_admin")
     call_command("runserver", "0.0.0.0:8000")
 
 
