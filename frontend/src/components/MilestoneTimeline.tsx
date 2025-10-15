@@ -21,7 +21,7 @@ const MilestoneTimeline = ({ milestones, loading }: MilestoneTimelineProps) => {
         description="A few luminous beats where Appizzo fused material science with dreamscapes."
         anchor="milestones-heading"
       />
-      <div className="mx-auto mt-16 max-w-4xl border-l border-glow/20 pl-6">
+      <div className="mx-auto mt-16 max-w-4xl border-l border-mist pl-6">
         {displayMilestones.map((milestone, index) => {
           const isSkeleton = milestone == null
           const yearLabel = isSkeleton ? '—' : milestone.year
@@ -40,7 +40,7 @@ const MilestoneTimeline = ({ milestones, loading }: MilestoneTimelineProps) => {
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <span className="absolute -left-[34px] top-1 flex h-6 w-6 items-center justify-center rounded-full border border-accent/60 bg-night text-xs text-accent">
+              <span className="absolute -left-[34px] top-1 flex h-6 w-6 items-center justify-center rounded-full border border-accent/40 bg-surface text-xs font-semibold text-accent shadow-sm">
                 {yearLabel}
               </span>
               <h3 className="text-xl font-semibold text-glow">{title}</h3>

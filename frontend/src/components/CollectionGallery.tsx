@@ -58,11 +58,11 @@ const CollectionGallery = ({ items, loading }: CollectionGalleryProps) => {
           return (
             <article
               key={item?.id ?? index}
-              className="group relative overflow-hidden rounded-2xl border border-glow/10 bg-night/70 backdrop-blur"
+              className="group relative overflow-hidden rounded-2xl border border-mist bg-surface shadow-sm"
             >
               <div className="aspect-square overflow-hidden">
                 <div
-                  className="h-full w-full bg-cover bg-center transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+                  className="h-full w-full bg-cover bg-center transition-all duration-700 group-hover:scale-105 group-hover:rotate-1"
                   style={{ backgroundImage }}
                 />
               </div>

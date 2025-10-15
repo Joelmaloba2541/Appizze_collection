@@ -37,7 +37,7 @@ const FeaturedShowcase = ({ items, loading }: FeaturedShowcaseProps) => {
             return (
               <motion.article
                 key={index}
-                className="group relative overflow-hidden rounded-3xl border border-glow/10 bg-night/70 shadow-xl shadow-accent/10 backdrop-blur"
+                className="group relative overflow-hidden rounded-3xl border border-mist bg-surface shadow-lg"
                 custom={index}
                 initial="hidden"
                 whileInView="visible"
@@ -62,7 +62,7 @@ const FeaturedShowcase = ({ items, loading }: FeaturedShowcaseProps) => {
                   </div>
                 </div>
                 <motion.span
-                  className="absolute inset-x-6 -bottom-16 flex h-16 items-center justify-center rounded-3xl bg-gradient-to-r from-accent to-lagoon font-semibold text-night shadow-lg shadow-accent/30"
+                  className="absolute inset-x-6 -bottom-16 flex h-16 items-center justify-center rounded-3xl bg-gradient-to-r from-accent to-lagoon font-semibold text-surface shadow-lg shadow-accent/20"
                   initial={{ opacity: 0, y: 0 }}
                   whileHover={{ opacity: 1, y: -10 }}
                   transition={{ duration: 0.4 }}
@@ -76,7 +76,7 @@ const FeaturedShowcase = ({ items, loading }: FeaturedShowcaseProps) => {
           return (
             <motion.article
               key={item.id}
-              className="group relative overflow-hidden rounded-3xl border border-glow/10 bg-night/70 shadow-xl shadow-accent/10 backdrop-blur"
+              className="group relative overflow-hidden rounded-3xl border border-mist bg-surface shadow-lg"
               custom={index}
               initial="hidden"
               whileInView="visible"
@@ -99,7 +99,7 @@ const FeaturedShowcase = ({ items, loading }: FeaturedShowcaseProps) => {
                 </div>
               </div>
               <motion.span
-                className="absolute inset-x-6 -bottom-16 flex h-16 items-center justify-center rounded-3xl bg-gradient-to-r from-accent to-lagoon font-semibold text-night shadow-lg shadow-accent/30"
+                className="absolute inset-x-6 -bottom-16 flex h-16 items-center justify-center rounded-3xl bg-gradient-to-r from-accent to-lagoon font-semibold text-surface shadow-lg shadow-accent/20"
                 initial={{ opacity: 0, y: 0 }}
                 whileHover={{ opacity: 1, y: -10 }}
                 transition={{ duration: 0.4 }}

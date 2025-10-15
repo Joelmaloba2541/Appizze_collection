@@ -47,9 +47,9 @@ const Hero = ({ status, totalPieces }: HeroProps) => {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.2 }}
         >
-          <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-accent/30 via-lagoon/40 to-ember/30 blur-3xl" />
+          <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-accent/20 via-lagoon/25 to-ember/20 blur-3xl" />
           <motion.div
-            className="relative h-72 w-56 overflow-hidden rounded-3xl border border-glow/10 bg-night/70 backdrop-blur"
+            className="relative h-72 w-56 overflow-hidden rounded-3xl border border-mist bg-surface shadow-xl"
             animate={{ rotate: [-4, 4, -4], y: [-10, 10, -10] }}
             transition={{ repeat: Infinity, duration: 14, ease: 'easeInOut' }}
           >

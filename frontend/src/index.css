@@ -11,4 +11,5 @@ body,
 body {
   background-image: theme('backgroundImage.aurora');
   background-color: theme('colors.night');
+  color: theme('colors.glow');
 }

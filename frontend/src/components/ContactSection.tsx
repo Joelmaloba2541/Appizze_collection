@@ -9,7 +9,7 @@ const ContactSection = () => {
         description="Whether you’re curating a kinetic runway or weaving sensors into city festivals, Appizzo opens portals for luminous partnerships."
         anchor="contact-heading"
       />
-      <div className="mx-auto mt-16 grid max-w-4xl gap-8 rounded-3xl border border-glow/15 bg-night/80 p-8 backdrop-blur">
+      <div className="mx-auto mt-16 grid max-w-4xl gap-8 rounded-3xl border border-mist bg-surface p-8 shadow">
         <p className="text-sm text-glow/80">
           Email us at <a href="mailto:hello@appizzo.studio" className="text-accent underline">hello@appizzo.studio</a> for bespoke commissions, residencies, and cross-sensorial experiments.
         </p>

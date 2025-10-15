@@ -37,7 +37,7 @@ const TestimonialsCarousel = ({ testimonials, loading }: TestimonialsCarouselPro
         description="A living exchange between creatives, technologists, and night roamers wrapped in Appizzo silhouettes."
         anchor="testimonials-heading"
       />
-      <div className="mx-auto mt-16 flex max-w-4xl flex-col gap-8 rounded-3xl border border-glow/15 bg-night/80 p-8 backdrop-blur">
+      <div className="mx-auto mt-16 flex max-w-4xl flex-col gap-8 rounded-3xl border border-mist bg-surface p-8 shadow">
         <div className="flex justify-between text-xs uppercase tracking-[0.3em] text-glow/60">
           <button
             type="button"
@@ -65,7 +65,7 @@ const TestimonialsCarousel = ({ testimonials, loading }: TestimonialsCarouselPro
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -40 }}
               transition={transition}
-              className="space-y-4 rounded-3xl border border-glow/15 bg-night/70 p-8 text-glow/80"
+              className="space-y-4 rounded-3xl border border-mist bg-surface p-8 text-glow/80 shadow-sm"
             >
               {active ? (
                 <>

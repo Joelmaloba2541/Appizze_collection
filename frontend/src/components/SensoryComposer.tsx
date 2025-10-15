@@ -175,34 +175,34 @@ const SensoryComposer = () => {
       />
       <div className="mx-auto mt-16 grid max-w-6xl gap-8 lg:grid-cols-[1.25fr_1fr]">
         <motion.div
-          className="relative overflow-hidden rounded-3xl border border-glow/15"
+          className="relative overflow-hidden rounded-3xl border border-mist bg-surface"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.7 }}
           style={{ backgroundImage: composition.aura.gradient }}
         >
-          <div className="absolute inset-0 bg-night/35 backdrop-blur-sm" />
-          <div className="relative z-10 flex h-full flex-col justify-between p-8 text-night">
+          <div className="absolute inset-0 bg-surface/80 backdrop-blur-sm" />
+          <div className="relative z-10 flex h-full flex-col justify-between p-8 text-glow">
             <div className="space-y-6">
-              <span className="inline-flex items-center gap-2 rounded-full bg-night/60 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em]">
+              <span className="inline-flex items-center gap-2 rounded-full bg-mist px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-glow/70">
                 {composition.aura.name}
               </span>
               <div className="space-y-3">
-                <h3 className="text-3xl font-bold">{composition.texture.name}</h3>
-                <p className="text-base text-night/70">{composition.aura.bloom}</p>
-                <p className="text-sm font-semibold text-night/75">{composition.sound.name}</p>
-                <p className="text-sm text-night/70">{composition.sound.cadence}</p>
+                <h3 className="text-3xl font-bold text-glow">{composition.texture.name}</h3>
+                <p className="text-base text-glow/70">{composition.aura.bloom}</p>
+                <p className="text-sm font-semibold text-glow/80">{composition.sound.name}</p>
+                <p className="text-sm text-glow/70">{composition.sound.cadence}</p>
               </div>
             </div>
             <div className="mt-8 space-y-3">
               {composition.fieldNotes.map((note, index) => (
-                <div key={index} className="rounded-2xl border border-night/25 bg-night/50 px-4 py-3 text-sm font-medium">
+                <div key={index} className="rounded-2xl border border-mist bg-surface px-4 py-3 text-sm font-medium text-glow/80 shadow-sm">
                   {note}
                 </div>
               ))}
             </div>
-            <div className="mt-8 space-y-3 text-sm text-night/80">
+            <div className="mt-8 space-y-3 text-sm text-glow/80">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em]">Portal</p>
                 <p className="mt-1 font-semibold">{composition.portal}</p>
@@ -218,7 +218,7 @@ const SensoryComposer = () => {
             </div>
           </div>
         </motion.div>
-        <div className="flex flex-col justify-between gap-8 rounded-3xl border border-glow/20 bg-night/70 p-6">
+        <div className="flex flex-col justify-between gap-8 rounded-3xl border border-mist bg-surface p-6 shadow">
           <div className="space-y-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Light Intensity</p>
@@ -251,20 +251,20 @@ const SensoryComposer = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 text-xs uppercase tracking-[0.3em] text-glow/70">
-            <div className="rounded-2xl border border-glow/15 bg-night/60 p-4">
+          <div className="grid grid-cols-2 gap-4 text-xs uppercase tracking-[0.3em] text-glow/60">
+            <div className="rounded-2xl border border-mist bg-surface p-4 shadow-sm">
               <p>Resonance</p>
               <p className="mt-2 text-lg font-bold text-glow">{composition.metrics.frequency}hz</p>
             </div>
-            <div className="rounded-2xl border border-glow/15 bg-night/60 p-4">
+            <div className="rounded-2xl border border-mist bg-surface p-4 shadow-sm">
               <p>Lumens</p>
               <p className="mt-2 text-lg font-bold text-glow">{composition.metrics.lumens}</p>
             </div>
-            <div className="rounded-2xl border border-glow/15 bg-night/60 p-4">
+            <div className="rounded-2xl border border-mist bg-surface p-4 shadow-sm">
               <p>Intensity</p>
               <p className="mt-2 text-lg font-bold text-glow">{composition.metrics.intensity}</p>
             </div>
-            <div className="rounded-2xl border border-glow/15 bg-night/60 p-4">
+            <div className="rounded-2xl border border-mist bg-surface p-4 shadow-sm">
               <p>Tempo</p>
               <p className="mt-2 text-lg font-bold text-glow">{composition.metrics.tempo}</p>
             </div>
@@ -274,7 +274,7 @@ const SensoryComposer = () => {
             onClick={() => setSeed((value) => value + 1)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
-            className="rounded-full bg-gradient-to-r from-accent via-lagoon to-ember px-5 py-3 text-sm font-semibold text-night shadow-lg shadow-lagoon/30"
+            className="rounded-full bg-gradient-to-r from-accent via-lagoon to-ember px-5 py-3 text-sm font-semibold text-surface shadow-lg shadow-lagoon/30"
           >
             Conjure New Pattern
           </motion.button>

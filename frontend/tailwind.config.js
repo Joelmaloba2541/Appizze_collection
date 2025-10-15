@@ -9,14 +9,17 @@ export default {
         sans: ['"Plus Jakarta Sans"', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        night: '#0b0b1d',
-        glow: '#f8f7ff',
-        accent: '#ff6ad5',
-        lagoon: '#4bb3fd',
-        ember: '#ff9671',
+        night: '#f4f6fb',
+        glow: '#1f2933',
+        accent: '#2563eb',
+        lagoon: '#0ea5e9',
+        ember: '#f97316',
+        surface: '#ffffff',
+        mist: '#e2e8f0',
       },
       backgroundImage: {
-        aurora: 'radial-gradient(circle at 20% 20%, rgba(75,179,253,0.4), transparent 50%), radial-gradient(circle at 80% 0%, rgba(255,150,113,0.4), transparent 55%), radial-gradient(circle at 50% 80%, rgba(255,106,213,0.25), transparent 60%)',
+        aurora:
+          'radial-gradient(circle at 15% 20%, rgba(37,99,235,0.15), transparent 55%), radial-gradient(circle at 80% 5%, rgba(14,165,233,0.18), transparent 60%), radial-gradient(circle at 50% 85%, rgba(249,115,22,0.12), transparent 65%)',
       },
     },
   },

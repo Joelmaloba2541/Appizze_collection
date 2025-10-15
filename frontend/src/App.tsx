@@ -52,7 +52,7 @@ const App = () => {
   const status = useMemo(() => ({ loading, error }), [loading, error])
 
   return (
-    <div id="top" className="min-h-screen bg-night/95 text-glow">
+    <div id="top" className="min-h-screen bg-night text-glow">
       <Navbar />
       <main className="space-y-32 pt-24">
         <Hero status={status} totalPieces={collection.length} />
