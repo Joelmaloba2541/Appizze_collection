@@ -59,10 +59,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -98,35 +98,31 @@ ASGI_APPLICATION = "appizzo_backend.asgi.application"
 # Database configuration
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Default to SQLite for local development
+# Default database configuration
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-# Check if we're running on Render
-if os.environ.get('RENDER') or os.environ.get('POSTGRES_DB'):
-    # Parse database URL from environment variables
-    try:
-        # Try to use the DATABASE_URL environment variable if available
-        import dj_database_url
-        DATABASES['default'] = dj_database_url.config(
-            default=os.environ.get('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
-    except ImportError:
-        # Fall back to individual environment variables
-        DATABASES['default'] = {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('POSTGRES_DB', 'appizze_db'),
-            'USER': os.environ.get('POSTGRES_USER', 'appizze_user'),
-            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
-            'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
-            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
-        }
+# Use PostgreSQL if DATABASE_URL is set
+if 'DATABASE_URL' in os.environ:
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+# Check for Render environment variables
+elif os.environ.get('RENDER') or os.environ.get('POSTGRES_DB'):
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB', 'appizze_db'),
+        'USER': os.environ.get('POSTGRES_USER', 'appizze_user'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -160,6 +156,12 @@ STATICFILES_DIRS = [
 # Ensure the staticfiles directory exists
 os.makedirs(STATIC_ROOT, exist_ok=True)
 os.makedirs(os.path.join(BASE_DIR, 'static', 'images'), exist_ok=True)
+
+# WhiteNoise configuration for serving static files in production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Ensure STATIC_ROOT exists and is writable
+os.makedirs(STATIC_ROOT, exist_ok=True)
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
