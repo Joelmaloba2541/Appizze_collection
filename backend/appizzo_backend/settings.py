@@ -95,26 +95,38 @@ TEMPLATES = [
 WSGI_APPLICATION = "appizzo_backend.wsgi.application"
 ASGI_APPLICATION = "appizzo_backend.asgi.application"
 
-if os.environ.get('RENDER'):
-    # Production database (PostgreSQL)
-    DATABASES = {
-        'default': {
+# Database configuration
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+# Default to SQLite for local development
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+
+# Check if we're running on Render
+if os.environ.get('RENDER') or os.environ.get('POSTGRES_DB'):
+    # Parse database URL from environment variables
+    try:
+        # Try to use the DATABASE_URL environment variable if available
+        import dj_database_url
+        DATABASES['default'] = dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    except ImportError:
+        # Fall back to individual environment variables
+        DATABASES['default'] = {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('POSTGRES_DB'),
-            'USER': os.environ.get('POSTGRES_USER'),
-            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-            'HOST': os.environ.get('POSTGRES_HOST'),
+            'NAME': os.environ.get('POSTGRES_DB', 'appizze_db'),
+            'USER': os.environ.get('POSTGRES_USER', 'appizze_user'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
+            'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
             'PORT': os.environ.get('POSTGRES_PORT', '5432'),
         }
-    }
-else:
-    # Local development database (SQLite)
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
