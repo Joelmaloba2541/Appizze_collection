@@ -13,11 +13,38 @@ def _split_env_list(value: str | None) -> list[str]:
     return [item.strip() for item in value.split(",") if item.strip()]
 
 
-_default_hosts = ["localhost", "127.0.0.1", "[::1]"]
-ALLOWED_HOSTS: list[str] = _split_env_list(os.getenv("ALLOWED_HOSTS")) or _default_hosts
+# Get Render hostname for production
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
-_default_csrf = ["http://localhost:3000"]
-CSRF_TRUSTED_ORIGINS = _split_env_list(os.getenv("CSRF_TRUSTED_ORIGINS")) or _default_csrf
+# Default hosts for development
+DEFAULT_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    'appizze-collection.onrender.com',
+    'appizze-collection-1.onrender.com'
+]
+
+# Get ALLOWED_HOSTS from environment or use defaults
+ALLOWED_HOSTS = _split_env_list(os.getenv("ALLOWED_HOSTS")) or DEFAULT_HOSTS
+
+# Add Render external hostname if available
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# CORS and CSRF settings
+CORS_ALLOWED_ORIGINS = _split_env_list(os.getenv("CORS_ALLOWED_ORIGINS")) or [
+    "http://localhost:3000",
+    "https://appizze-collection-1.onrender.com"
+]
+
+CSRF_TRUSTED_ORIGINS = _split_env_list(os.getenv("CSRF_TRUSTED_ORIGINS")) or [
+    "http://localhost:3000",
+    "https://appizze-collection-1.onrender.com"
+]
+
+# Required for Render health checks
+HEALTH_CHECK = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -33,6 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -41,6 +69,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = "appizzo_backend.urls"
 
@@ -63,12 +95,26 @@ TEMPLATES = [
 WSGI_APPLICATION = "appizzo_backend.wsgi.application"
 ASGI_APPLICATION = "appizzo_backend.asgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if os.environ.get('RENDER'):
+    # Production database (PostgreSQL)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('POSTGRES_DB'),
+            'USER': os.environ.get('POSTGRES_USER'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+            'HOST': os.environ.get('POSTGRES_HOST'),
+            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+        }
     }
-}
+else:
+    # Local development database (SQLite)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -90,9 +136,18 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Ensure the staticfiles directory exists
+os.makedirs(STATIC_ROOT, exist_ok=True)
+os.makedirs(os.path.join(BASE_DIR, 'static', 'images'), exist_ok=True)
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"

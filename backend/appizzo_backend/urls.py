@@ -4,6 +4,8 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
+import os
 
 
 def favicon_view(request):
@@ -32,12 +34,19 @@ def api_root(request):
     })
 
 
+def get_favicon(request):
+    return serve(request, 'images/favicon.ico', document_root=settings.STATIC_ROOT)
+
 urlpatterns = [
     path("", api_root, name="api-root"),
     path("admin/", admin.site.urls),
     path("api/", include("collection.urls")),
-    # Handle favicon.ico requests
-    path('favicon.ico', favicon_view, name='favicon'),
+    # Serve favicon.ico
+    path('favicon.ico', get_favicon, name='favicon'),
     # Redirect any other favicon requests
     path('favicon.ico/', RedirectView.as_view(url='/favicon.ico', permanent=True)),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+# Serve static files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
